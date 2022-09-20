@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>코드 질문 게시판</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            color: dimgray;
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        li, ul, a{
+            list-style: none;
+            text-decoration: none;
+        }
+        #wrap{
+            width:100%;
+            height: 100vh;
+            display: flex;
+        }
+        #aside-nav{
+            padding: 50px;
+            width: 25%;
+            height: 100vh;
+            background-color: dimgray;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+
+            /* 배경 이미지 첨부*/
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_960_720.jpg");
+            background-size: cover;
+            background-position: -80px;
+
+            /* 고정 설정*/
+            position: fixed;
+            z-index: 1;
+        }
+        #aside-nav > h1{
+            padding: 30px 0;
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            color:#fff;
+        }
+        .category{
+            height: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .category > li > button{
+            background-color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size:20px;
+            border:none;
+            border-radius: 5px;
+
+            /*버튼설정*/
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        .category > li > button:hover {
+            background-color: white;
+            color: black;
+            /*마우스 올릴 시 손가락모양 나오게하기*/
+            cursor: pointer;
+        }
+        /*질문하기 버튼 추가*/
+        #aside-nav>button {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        #aside-nav>button:hover {
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        #write-btn{
+            background-color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size:20px;
+            border:none;
+            border-radius: 5px;
+        }
+        .bot-btn{
+            width:100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            height: auto;
+        }
+        /*로그인 버튼*/
+        .bot-btn>#login-btn {
+            background-color: white;
+            border: none;
+            border-radius: 0;
+        }
+        #home-btn {
+            border-radius: 0;
+        }
+        #back-btn {
+            border-radius: 0;
+        }
+
+        #login-btn{
+            padding: 10px 50px;
+            border-radius: 5px;
+            border:none;
+            font-size:16px;
+        }
+        .page-btn{
+            width:40%;
+            height: auto;
+        }
+        .page-btn > button{
+            border-radius: 5px;
+            border:none;
+            margin-left: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+
+        main{
+            /*위치 설정 (fixed와 세트)*/
+            position: absolute;
+            left: 470px;
+
+            width: 70%;
+            margin: 50px;
+            padding: 50px;
+            /*background-color: dimgray;*/
+            border-radius: 10px;
+        }
+        main > div{
+            padding: 20px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        /*글영역*/
+        .board {
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            /*padding: 30px;*/
+        }
+        .board>h3 {
+            margin-bottom: 20px;
+        }
+        .board-btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: right;
+            margin-bottom: 40px;
+        }
+        .board-btn>button {
+            margin-left: 10px;
+            width: 90px;
+            height: 50px;
+        }
+        .board>img {
+            margin-bottom: 15px;
+        }
+        {#게시글 글내용 폰트크기 조절#}
+        .board>p {
+            font-size: 18px;
+        }
+
+        /*답변창*/
+        .comment-write {
+            padding: 0;
+            /*box-shadow: 0px 0px 5px 0px grey;*/
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        /*답변창 쓰는곳*/
+        .comment-write > #comment {
+            width: 1180px;
+            height: 80px;
+        }
+
+        /*답변창 placeholder 왼쪽여백 주기*/
+        .comment-write > #comment::placeholder {
+            padding-left: 10px;
+        }
+
+        .comment-write > button {
+            width: 150px;
+            height: 80px;
+        }
+
+        {#답변 리스트#}
+        #comment-list {
+            padding: 0;
+        }
+        .comment-wrap {
+            border: 1px solid grey;
+            height: 80px;
+            padding: 10px;
+            border-radius: 5px;
+            /*box-shadow: 0px 0px 3px 0px grey;*/
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .comment-wrap > button {
+            width: 60px;
+            height: 60px;
+        }
+        .comment-wrap > .comment > .name {
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <script
+            src="https://kit.fontawesome.com/a991ae6b9e.js"
+            crossorigin="anonymous"
+    ></script>
+
+    <script>
+        $(document).ready(function(){
+            show_comment()
+            show_board()
+            $('#comment-list').empty()
+            $('#board-title').empty()
+            $('#board-content').empty()
+            $('#board-category').empty()
+
+
+        });
+
+        // 게시판 글 보여주기
+        function show_board() {
+            $.ajax({
+                type: "GET",
+                url: "/board_show",
+                data: {},
+                success: function (response) {
+                    let title = response['boards'][0]['title']
+                    let content = response['boards'][0]['content']
+                    let category = response['boards'][0]['category']
+
+                    $('#board-title').append(title)
+                    $('#board-content').append(content)
+                    $('#board-category').append(category)
+                }
+            });
+        }
+
+        // 답변 등록하기
+        function post_comment() {
+            let comment = $('#comment').val()
+            if (comment == "") {
+                alert('답변을 입력하세요!')
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/comment_post",
+                    data: {comment_give:comment},
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.reload()
+                    }
+                });
+            }
+
+        }
+
+        // 답변 리스트 보여주기
+        function show_comment() {
+            $.ajax({
+                type: "GET",
+                url: "/comment_show",
+                data: {},
+                success: function (response) {
+                    let rows = response['comments']
+                    for (i = 0; i < rows.length; i++) {
+                        let comment = rows[i]['comment']
+                        let name = rows[i]['profile_name']
+                        let id = rows[i]['_id']
+                        let post = rows[i]
+
+                        let temp_html = `<div class="comment-wrap" id="${id}">
+                                            <div class="comment">
+                                                <p class="name">${name}</p>
+                                                <p>${comment}</p>
+                                            </div>
+                                            <button>채택</button>
+                                        </div>`
+                        $('#comment-list').append(temp_html)
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <nav id="aside-nav">
+        <h1>코딩 질문방</h1>
+        <ul class="category">
+            <li>
+                <button type="button" id="html-css">HTML / CSS</button>
+            </li>
+            <li>
+                <button type="button" id="js">Java Script</button>
+            </li>
+            <li>
+                <button type="button" id="py">Python</button>
+            </li>
+        </ul>
+        <button type="button" id="write-btn">질문하기</button>
+        <div class="bot-btn">
+            <button type="button" id="login-btn">로그인</button>
+            <div class="bot-btn page-btn">
+                <button type="button" id="home-btn"><i class="fa-sharp fa-solid fa-house"></i></button>
+                <button type="button" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <!-- 글영역-->
+        <div class="board">
+            <h2 id="board-title">JS에서 체크박스 체크 여부를 확인하려면 어떻게하나요</h2>
+            <h3 id="board-category">Javascript</h3>
+            <!-- 이미지 공간-->
+            <img src="https://velog.velcdn.com/images/yuns8708/post/6d7c0995-fa83-4f87-9196-65de4d495601/image.png">
+            <p id="board-content">안녕하세요. JS 질문입니다. html의 체크박스를 체크하면 그 값을 js로 연결하여 체크 여부를 확인하는 방법이 없을까요?
+                답변 기다립니다.</p>
+        </div>
+        <!-- 글영역 버튼-->
+        <div class="board-btn">
+            <button>수정하기</button>
+            <button>삭제하기</button>
+        </div>
+
+
+        <!-- 답변 입력창-->
+        <div class="comment-write">
+            <input id="comment" type="text" placeholder="답변을 입력하세요">
+            <button onclick="post_comment()">확인</button>
+        </div>
+
+        <div id="comment-list">
+            <!-- 답변 리스트-->
+            <div class="comment-wrap">
+                <div class="comment">
+                    <p class="name">nickname</p>
+                    <p>답변입니다.</p>
+                </div>
+                <button>채택</button>
+            </div>
+            <div class="comment-wrap">
+                <div class="comment">
+                    <p class="name">nickname</p>
+                    <p>체크박스 좋아요</p>
+                </div>
+                <button>채택</button>
+            </div>
+            <div class="comment-wrap">
+                <div class="comment">
+                    <p class="name">nickname</p>
+                    <p>
+                        checkbox element의 checked 속성은 boolean 값을 가집니다.
+                        체크박스가 선택되면 true, 체크박스가 선택 해제되면 false 값을 가집니다.</p>
+                </div>
+                <button>채택</button>
+            </div>
+        </div>
+
+
+    </main>
+</div>
+</body>
+</html>
