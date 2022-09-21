@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>코드 질문 게시판</title>
+
+    <link rel="stylesheet" href="/static/css/titleStyle.css">
+
+       <style>
+        .button.is-sparta {
+            background-color: royalblue;
+            border-color: transparent;
+            color: #fff !important;
+        }
+
+        .button.is-sparta.is-outlined {
+            background-color: transparent;
+            border-color: royalblue;
+            color: royalblue !important;
+        }
+
+        .help {
+            color: gray;
+        }
+
+        .is-hidden {
+            display: none !important;
+        }
+    </style>
+
+    <script
+            src="https://kit.fontawesome.com/a991ae6b9e.js"
+            crossorigin="anonymous"
+    ></script>
+
+
+
+    <script>
+        // {% if msg %}
+        //     alert("{{ msg }}")
+        // {% endif %}
+        function sign_in() {
+            let username = $("#input-username").val()
+            let password = $("#input-password").val()
+
+            if (username == "") {
+                $("#help-id-login").text("아이디를 입력해주세요.")
+                $("#input-username").focus()
+                return;
+            } else {
+                $("#help-id-login").text("")
+            }
+
+            if (password == "") {
+                $("#help-password-login").text("비밀번호를 입력해주세요.")
+                $("#input-password").focus()
+                return;
+            } else {
+                $("#help-password-login").text("")
+            }
+            $.ajax({
+                type: "POST",
+                url: "/sign_in",
+                data: {
+                    username_give: username,
+                    password_give: password
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        $.cookie('mytoken', response['token'], {path: '/'});
+                        window.location.replace("/")
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            });
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            window.location.href = '/';
+        }
+
+        function toggle_sign_up() {
+            $("#login-btn").toggleClass("is-hidden")
+            $("#logout-btn").toggleClass("is-hidden")
+            $("#div-sign-in-or-up").toggleClass("is-hidden")
+            $("#help-id").toggleClass("is-hidden")
+            $("#help-password").toggleClass("is-hidden")
+        }
+
+
+        function log_out(){
+
+        }
+
+
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <nav id="aside-nav">
+        <div class="title">
+            <h1>코딩 질문방</h1>
+            <h2>Code QnA Board</h2>
+        </div>
+        <ul class="category">
+            <li>
+                <button type="button" id="html-css">HTML / CSS</button>
+            </li>
+            <li>
+                <button type="button" id="js">Java Script</button>
+            </li>
+            <li>
+                <button type="button" id="py">Python</button>
+            </li>
+            <li>
+                <button type="button" id="write-btn">질문하기</button>
+            </li>
+        </ul>
+        <div class="bot-btn">
+            <button type="button" id="login-btn" onclick="window.location.href='/login'; toggle_sign_up()">로그인</button>
+            <button type="button" id="logout-btn" class="is-hidden" onclick=" toggle_sign_up()">로그아웃</button>
+            <div class="bot-btn page-btn">
+                <button type="button" id="home-btn"><i class="fa-sharp fa-solid fa-house"></i></button>
+                <button type="button" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div>hi</div>
+    </main>
+</div>
+</body>
+</html>

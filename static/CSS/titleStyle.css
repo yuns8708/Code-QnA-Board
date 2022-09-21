@@ -68,7 +68,7 @@ li, ul, a{
     cursor: pointer;
 }
 /*질문하기 버튼 추가*/
-#aside-nav>button {
+#aside-nav > button {
     background-color: transparent;
     color: white;
     border: 1px solid white;
@@ -129,11 +129,37 @@ li, ul, a{
 main{
     /*위치 설정 (fixed와 세트)*/
     position: absolute;
-    left: 470px;
+    left: 25%;
 
     width: 70%;
+    height:90vh;
     margin: 50px;
     padding: 50px;
     /*background-color: dimgray;*/
     border-radius: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
