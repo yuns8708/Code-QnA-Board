@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>코드 질문 게시판</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: dimgray;
+        }
+
+        li, ul, a {
+            list-style: none;
+            text-decoration: none;
+        }
+
+        #wrap {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+        }
+
+        #aside-nav {
+            padding: 50px;
+            width: 20%;
+            height: 100vh;
+            background-color: dimgray;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        #aside-nav > h1 {
+            padding: 30px 0;
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            color: #fff;
+        }
+
+        .category {
+            height: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .category > li > button {
+            background-color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #write-btn {
+            background-color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .bot-btn {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            height: auto;
+        }
+
+        #login-btn {
+            padding: 10px 50px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .page-btn {
+            width: 40%;
+            height: auto;
+        }
+
+        .page-btn > button {
+            border-radius: 5px;
+            border: none;
+            margin-left: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+        main {
+            width: 80%;
+            margin: 50px;
+            padding: 50px;
+            background-color: dimgray;
+            border-radius: 50px;
+        }
+
+        main > div {
+            padding: 20px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .mainList {
+        {#background-color: white;
+        width: 80vh;
+        height:100%;
+        margin: 10px auto 10px auto;
+        display: flex;
+        align-items: center;
+        position: center;#}
+
+        }
+
+        main > div > div {
+            background-color: white;
+
+            width: 100%;
+            height: 50px;
+            margin: 10px auto 10px auto;
+            display: flex;
+            align-items: center;
+            position: center;
+            border-style: solid;
+
+
+        }
+
+    </style>
+    <script
+            src="https://kit.fontawesome.com/a991ae6b9e.js"
+            crossorigin="anonymous"
+    ></script>
+    <script>
+
+
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <nav id="aside-nav">
+        <h1>코딩 질문방</h1>
+        <ul class="category">
+            <li>
+                <button type="button" id="html-css" onclick="location.href='/html_CSS'">HTML / CSS</button>
+            </li>
+            <li>
+                <button type="button" id="js" onclick="location.href='/Javascript'">Java Script</button>
+            </li>
+            <li>
+                <button type="button" id="py" onclick="location.href='/Python'">Python</button>
+            </li>
+        </ul>
+        <button type="button" id="write-btn" onclick="location.href='/write';">질문하기</button>
+        <div class="bot-btn">
+            <button type="button" id="login-btn">로그인</button>
+            <div class="bot-btn page-btn">
+                <button type="button" id="home-btn" onclick="location.href='/';"><i
+                        class="fa-sharp fa-solid fa-house"></i></button>
+                <button type="button" id="back-btn" onclick="window.history.back()"><i
+                        class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="mainList" id="mainList">
+            {% for board in boards %}
+                {% if board.category=="html/CSS" %}
+                    <div><a href="/detail/{{ board._id }}">{{ board.title }}</a></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </main>
+</div>
+</body>
+</html>
