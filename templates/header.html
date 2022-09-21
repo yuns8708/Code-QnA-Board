@@ -73,26 +73,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-
     <script>
         // {% if msg %}
-        //     alert("{{ msg }}")
-        // {% endif %}
+            //     alert("{{ msg }}")
+            // {% endif %}
+
 
         function toggle_sign_up() {
             $("#login-btn").toggleClass("is-hidden")
             $("#logout-btn").toggleClass("is-hidden")
-            $("#div-sign-in-or-up").toggleClass("is-hidden")
-            $("#help-id").toggleClass("is-hidden")
-            $("#help-password").toggleClass("is-hidden")
         }
 
+        function ask_ques(){
+            if(user_info == ["id"]){
+                alert('')
+            }
+        }
 
-        function sign_out() {
+        function log_in() {
+            alert('로그인페이지로 가는중!')
+            window.location.href = "/login"
+        }
+
+        function log_out() {
             $.removeCookie('mytoken', {path: '/'});
             alert('로그아웃!')
             window.location.href = "/login"
         }
+
+
     </script>
 </head>
 <body>
@@ -112,16 +121,12 @@
             <button type="button" id="py">Python</button>
         </li>
         <li>
-            <button type="button" id="write-btn">질문하기</button>
+            <button type="button" id="write-btn" onclick="ask_ques()">질문하기</button>
         </li>
     </ul>
     <div class="bot-btn">
-        <!--            <button type="button" id="login-btn" onclick="window.location.href='/login'; toggle_sign_up()">로그인</button>-->
-        <button type="button" id="logout-btn" onclick=" toggle_sign_up()"><a
-                class="button level-item has-text-centered is-sparta is-outlined" aria-label="logout"
-                onclick="sign_out()">
-            로그아웃</span>
-        </a></button>
+        <button type="button" id="login-btn" onclick="toggle_sign_up();">로그인</button>
+        <button type="button" id="logout-btn" class="is-hidden" onclick=" toggle_sign_up(); log_out()">로그아웃</button>
         <div class="bot-btn page-btn">
             <button type="button" id="home-btn"><i class="fa-sharp fa-solid fa-house"></i></button>
             <button type="button" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>

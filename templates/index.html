@@ -3,114 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <title>코드 질문 게시판</title>
-
-    <link rel="stylesheet" href="/static/css/titleStyle.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        .button.is-sparta {
-            background-color: royalblue;
-            border-color: transparent;
-            color: #fff !important;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: dimgray;
         }
 
-        .button.is-sparta.is-outlined {
-            background-color: transparent;
-            border-color: royalblue;
-            color: royalblue !important;
+        li, ul, a {
+            list-style: none;
+            text-decoration: none;
         }
 
-        .help {
-            color: gray;
+        #wrap {
+            width: 100%;
+            height: 100vh;
+            display: flex;
         }
 
-        .is-hidden {
-            display: none !important;
+        #aside-nav {
+            padding: 50px;
+            width: 20%;
+            height: 100vh;
+            background-color: dimgray;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
         }
+
+        #aside-nav > h1 {
+            padding: 30px 0;
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            color: #fff;
+        }
+
+        .category {
+            height: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .category > li > button {
+            background-color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #write-btn {
+            background-color: #fff;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .bot-btn {
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            height: auto;
+        }
+
+        #login-btn {
+            padding: 10px 50px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .page-btn {
+            width: 40%;
+            height: auto;
+        }
+
+        .page-btn > button {
+            border-radius: 5px;
+            border: none;
+            margin-left: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+        main {
+            width: 80%;
+            margin: 50px;
+            padding: 50px;
+            background-color: dimgray;
+            border-radius: 50px;
+        }
+
+        main > div {
+            padding: 20px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        /*.mainList {*/
+        /*    background-color: white;*/
+        /*    width: 80vh;*/
+        /*    height: 100%;*/
+        /*    margin: 10px auto 10px auto;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    position: center;*/
+
+        /*}*/
+
+        main > div > div {
+            background-color: white;
+
+            width: 100%;
+            height: 50px;
+            margin: 10px auto 10px auto;
+            display: flex;
+            align-items: center;
+            position: center;
+            border-style: solid;
+
+
+        }
+
     </style>
-
     <script
             src="https://kit.fontawesome.com/a991ae6b9e.js"
             crossorigin="anonymous"
     ></script>
-
-
-    <!-- html 같은 부분 링크 위한 jquery 스크립트 -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#headers").load("header.html");  // 원하는 파일 경로를 삽입하면 된다
-
-        });
-    </script>
-
-
     <script>
-        // {% if msg %}
-        //     alert("{{ msg }}")
-        // {% endif %}
-        function sign_in() {
-            let username = $("#input-username").val()
-            let password = $("#input-password").val()
-
-            if (username == "") {
-                $("#help-id-login").text("아이디를 입력해주세요.")
-                $("#input-username").focus()
-                return;
-            } else {
-                $("#help-id-login").text("")
-            }
-
-            if (password == "") {
-                $("#help-password-login").text("비밀번호를 입력해주세요.")
-                $("#input-password").focus()
-                return;
-            } else {
-                $("#help-password-login").text("")
-            }
-            $.ajax({
-                type: "POST",
-                url: "/sign_in",
-                data: {
-                    username_give: username,
-                    password_give: password
-                },
-                success: function (response) {
-                    if (response['result'] == 'success') {
-                        $.cookie('mytoken', response['token'], {path: '/'});
-                        window.location.replace("/")
-                    } else {
-                        alert(response['msg'])
-                    }
-                }
-            });
-        }
-
-
-        function toggle_sign_up() {
-            $("#login-btn").toggleClass("is-hidden")
-            $("#logout-btn").toggleClass("is-hidden")
-            $("#div-sign-in-or-up").toggleClass("is-hidden")
-            $("#help-id").toggleClass("is-hidden")
-            $("#help-password").toggleClass("is-hidden")
-        }
-
-        0
-
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'});
-            alert('로그아웃!')
-            window.location.href = "/login"
-        }
-
 
     </script>
 </head>
 <body>
 <div id="wrap">
-    <div id="headers"></div>
+
+    <header>{% include 'header.html' %}</header>
 
     <main>
-        <div>hi</div>
+        <div class="mainList" id="mainList">
+            {% for list in QnA_list %}
+            <div><a href="/detail/{{ list.num }}">{{ list.title }}</a>
+                <div>{{ list.nickname }}</div>
+            </div>
+            {% endfor %}
+        </div>
     </main>
 </div>
 </body>

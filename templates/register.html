@@ -38,15 +38,6 @@
             crossorigin="anonymous"
     ></script>
 
-       <!-- html 같은 부분 링크 위한 jquery 스크립트 -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#headers").load("header.html");  // 원하는 파일 경로를 삽입하면 된다
-
-        });
-    </script>
-
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -211,8 +202,8 @@
 </head>
 <body>
 <div id="wrap">
-    <div id="headers"></div>
 
+    <header>{% include 'header.html' %}</header>
 
     <main>
         <section id="register-home" class="register-home">

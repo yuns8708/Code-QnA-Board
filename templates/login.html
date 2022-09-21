@@ -69,25 +69,15 @@
             crossorigin="anonymous"
     ></script>
 
-
-    <!-- html 같은 부분 링크 위한 jquery 스크립트 -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#headers").load("header.html");  // 원하는 파일 경로를 삽입하면 된다
-
-        });
-    </script>
-
-
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <script>
         // {% if msg %}
-        //     alert("{{ msg }}")
-        // {% endif %}
+            //     alert("{{ msg }}")
+            // {% endif %}
+
         function sign_in() {
             let username = $("#input-username").val()
             let password = $("#input-password").val()
@@ -126,21 +116,11 @@
         }
 
 
-        function toggle_sign_up() {
-            $("#login-btn").toggleClass("is-hidden")
-            $("#logout-btn").toggleClass("is-hidden")
-            $("#div-sign-in-or-up").toggleClass("is-hidden")
-            $("#help-id").toggleClass("is-hidden")
-            $("#help-password").toggleClass("is-hidden")
-        }
-
-
-        function sign_out() {
+        function log_out() {
             $.removeCookie('mytoken', {path: '/'});
             alert('로그아웃!')
             window.location.href = "/login"
         }
-
 
     </script>
 
@@ -149,7 +129,7 @@
 <body>
 <div id="wrap">
 
-    <div id="headers"></div>
+    <header>{% include 'header.html' %}</header>
 
     <main>
         <section id='login-home' class="login-home">
@@ -185,14 +165,12 @@
                         회원가입하기
                     </button>
                     <button class="level-item button is-sparta is-outlined"
-                            onclick="window.location.href='/'; toggle_sign_up()">
+                            onclick="window.location.href='/'">
                         비회원으로 입장
                     </button>
                 </nav>
             </div>
         </section>
-
-
     </main>
 </div>
 </body>
