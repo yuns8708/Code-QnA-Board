@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="/static/css/titleStyle.css">
 
-       <style>
+    <style>
         .button.is-sparta {
             background-color: royalblue;
             border-color: transparent;
@@ -33,6 +33,15 @@
             crossorigin="anonymous"
     ></script>
 
+
+    <!-- html 같은 부분 링크 위한 jquery 스크립트 -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#headers").load("header.html");  // 원하는 파일 경로를 삽입하면 된다
+
+        });
+    </script>
 
 
     <script>
@@ -76,10 +85,6 @@
             });
         }
 
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'});
-            window.location.href = '/';
-        }
 
         function toggle_sign_up() {
             $("#login-btn").toggleClass("is-hidden")
@@ -89,9 +94,12 @@
             $("#help-password").toggleClass("is-hidden")
         }
 
+        0
 
-        function log_out(){
-
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/login"
         }
 
 
@@ -99,34 +107,7 @@
 </head>
 <body>
 <div id="wrap">
-    <nav id="aside-nav">
-        <div class="title">
-            <h1>코딩 질문방</h1>
-            <h2>Code QnA Board</h2>
-        </div>
-        <ul class="category">
-            <li>
-                <button type="button" id="html-css">HTML / CSS</button>
-            </li>
-            <li>
-                <button type="button" id="js">Java Script</button>
-            </li>
-            <li>
-                <button type="button" id="py">Python</button>
-            </li>
-            <li>
-                <button type="button" id="write-btn">질문하기</button>
-            </li>
-        </ul>
-        <div class="bot-btn">
-            <button type="button" id="login-btn" onclick="window.location.href='/login'; toggle_sign_up()">로그인</button>
-            <button type="button" id="logout-btn" class="is-hidden" onclick=" toggle_sign_up()">로그아웃</button>
-            <div class="bot-btn page-btn">
-                <button type="button" id="home-btn"><i class="fa-sharp fa-solid fa-house"></i></button>
-                <button type="button" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
-            </div>
-        </div>
-    </nav>
+    <div id="headers"></div>
 
     <main>
         <div>hi</div>
