@@ -133,25 +133,31 @@
             <h2>Code QnA Board</h2>
         </div>
         <ul class="category">
+
+ <!--            2022-09-21 김휘린 변경사항 : 각 버튼에 카테고리 하이퍼링크 추가-->
             <li>
-                <button type="button" id="html-css">HTML / CSS</button>
+                <button type="button" id="html-css" onclick="location.href='/html_CSS'">HTML / CSS</button>
             </li>
             <li>
-                <button type="button" id="js">Java Script</button>
+                <button type="button" id="js" onclick="location.href='/Javascript'">Java Script</button>
             </li>
             <li>
-                <button type="button" id="py">Python</button>
+                <button type="button" id="py" onclick="location.href='/Python'">Python</button>
             </li>
-            <li>
-                <button type="button" id="write-btn">질문하기</button>
+        </ul>
+        <button type="button" id="write-btn" onclick="location.href='/write';">질문하기</button>
             </li>
         </ul>
         <div class="bot-btn">
             <button type="button" id="login-btn" onclick="window.location.href='/login'; toggle_sign_up()">로그인</button>
             <button type="button" id="logout-btn" class="is-hidden" onclick=" toggle_sign_up()">로그아웃</button>
             <div class="bot-btn page-btn">
-                <button type="button" id="home-btn"><i class="fa-sharp fa-solid fa-house"></i></button>
-                <button type="button" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+
+<!--                2022-09-21 김휘린 변경사항 : 홈, 뒤로가기 하이퍼링크 추가-->
+                <button type="button" id="home-btn" onclick="location.href='/';"><i
+                        class="fa-sharp fa-solid fa-house"></i></button>
+                <button type="button" id="back-btn" onclick="window.history.back()"><i
+                        class="fa-solid fa-arrow-left"></i></button>
             </div>
         </div>
     </nav>

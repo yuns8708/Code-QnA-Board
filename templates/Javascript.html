@@ -173,7 +173,9 @@
     <main>
         <div class="mainList" id="mainList">
             {% for list in QnA_list %}
-                <div><a href="/detail/{{ list.num }}">{{ list.title }}</a></div>
+                {% if list.category=="Javascript" %}
+                    <div><a href="/detail/{{ list.num }}">{{ list.title }}</a></div>
+                {% endif %}
             {% endfor %}
         </div>
     </main>
