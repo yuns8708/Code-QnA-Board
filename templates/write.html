@@ -159,7 +159,6 @@
             let content = $('#content').val()
             let category = $('#ex-select').val()
             let fileUpload = $('#fileUpload').val()
-            let today = new Date().toISOString()
 
             if ( title =="" ) {
                 alert("제목을 입력하세요!");
@@ -178,24 +177,13 @@
                     'title_give':title,
                     'content_give': content,
                     'category_give':category,
-                    'fileUpload_give':fileUpload,
-                    'date_give': today
+                    'fileUpload_give':fileUpload
                 },
                 success: function (response) {
                     alert(response['msg'])
                     window.location.href='/';
                 }
             })
-        }
-        {#질문하기 로그인 유무 확인 펑션#}
-        function question(){
-            let cookie = document.cookie;
-             if ( cookie == 0) {
-                 alert("로그인하세요")
-             }
-             else {
-                 window.location.href='/write'
-             }
         }
 
     </script>

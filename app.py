@@ -11,7 +11,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 SECRET_KEY = 'CODEQNA'
 
-client = MongoClient('3.35.53.207', 27017, username="test", password="test")
+client = MongoClient('mongodb+srv://test:sparta@cluster0.lo2ev.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.firstweekproject
 
 
@@ -38,6 +38,7 @@ def detail_page(id):
 @app.route("/data/", methods=["GET"])
 def detail_get():
     qna_list = list(db.miniproject.find({}, {'_id': False}))
+    print(qna_list)
     return jsonify({'qna': qna_list})
 
 
@@ -67,10 +68,9 @@ def Python():
 def write_post():
     token_receive = request.cookies.get('mytoken')
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        payload = jwt.decode(token_receive, algorithms=['HS256'])
         user_info = db.miniproject.find_one({"username": payload["id"]})
         date_receive = request.form["date_give"]
-
         title_receive = request.form['title_give']
         content_receive = request.form['content_give']
         category_receive = request.form['category_give']
@@ -79,83 +79,13 @@ def write_post():
         QnA_list = list(db.miniproject.find({}, {'_id': False}))
         count = len(QnA_list) + 1
 
-        #  done : 게시글 삭제유무 판단에 사용,    num : 게시글 고유 번호 확인용
-        doc = {'date': date_receive, 'usernick': user_info["usernick"], 'username': user_info["username"], 'done': 0,
-               'num': count, 'title': title_receive,
+        # nick_name: 닉네임, username : 이름 done : 게시글 삭제유무 판단에 사용,    num : 게시글 고유 번호 확인용
+        doc = {"ID": payload["id"], "date": date_receive, "nick_name": user_info["profile_name"],
+               "username": user_info["username"], 'done': 0, 'num': count, 'title': title_receive,
                'content': content_receive, 'category': category_receive, 'fileUpload': fileUpload_receive}
         db.miniproject.insert_one(doc)
 
         return jsonify({'msg': '작성 완료'})
-    except jwt.ExpiredSignatureError:
-        return jsonify({'result': 'fail', 'msg': '로그인 후 이용해주세요.'})
-    except jwt.exceptions.DecodeError:
-        return jsonify({'result': 'fail', 'msg': '로그인 후 이용해주세요.'})
-
-
-@app.route('/login')
-def login():
-    msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
-
-
-@app.route('/register')
-def register():
-    msg = request.args.get("msg")
-    return render_template('register.html', msg=msg)
-
-
-@app.route('/sign_in', methods=['POST'])
-def sign_in():
-    # 로그인
-    username_receive = request.form['username_give']
-    password_receive = request.form['password_give']
-
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.miniproject.find_one({'username': username_receive, 'password': pw_hash})
-
-    if result is not None:
-        payload = {
-            'id': username_receive,
-            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 6)  # 로그인 6시간 유지(만료시간)
-        }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
-        return jsonify({'result': 'success', 'token': token})
-    # 찾지 못하면
-    else:
-        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
-
-
-@app.route('/sign_up/save', methods=['POST'])
-def sign_up():
-    username_receive = request.form['username_give']
-    usernick_receive = request.form['usernick_give']
-    password_receive = request.form['password_give']
-    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    doc = {
-        "username": username_receive,  # 아이디
-        "usernick": usernick_receive,  # 닉네임
-        "password": password_hash,  # 비밀번호
-        "profile_name": username_receive,  # 프로필 이름 기본값은 아이디
-    }
-    db.miniproject.insert_one(doc)
-    return jsonify({'result': 'success'})
-
-
-@app.route('/sign_up/check_dup', methods=['POST'])
-def check_dup():
-    username_receive = request.form['username_give']
-    exists = bool(db.miniproject.find_one({"username": username_receive}))
-    return jsonify({'result': 'success', 'exists': exists})
-
-
-@app.route('/sign_up/check_dup_nick', methods=['POST'])
-def check_dup_nick():
-    usernick_receive = request.form['usernick_give']
-    exists = bool(db.miniproject.find_one({"usernick": usernick_receive}))
-    return jsonify({'result': 'success', 'exists': exists})
-
-
 
 
 if __name__ == '__main__':

@@ -141,16 +141,6 @@
             crossorigin="anonymous"
     ></script>
     <script>
-        {#질문하기 로그인 유무 확인 펑션#}
-        function question(){
-            let cookie = document.cookie;
-             if ( cookie == 0) {
-                 alert("로그인하세요")
-             }
-             else {
-                 window.location.href='/write'
-             }
-        }
 
     </script>
 </head>
@@ -169,7 +159,7 @@
                 <button type="button" id="py" onclick="location.href='/Python'">Python</button>
             </li>
         </ul>
-        <button type="button" id="write-btn" onclick="question()">질문하기</button>
+        <button type="button" id="write-btn" onclick="location.href='/write';">질문하기</button>
         <div class="bot-btn">
             <button type="button" id="login-btn">로그인</button>
             <div class="bot-btn page-btn">
