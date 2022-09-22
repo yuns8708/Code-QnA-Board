@@ -13,15 +13,27 @@
 
     <style>
         .button.is-sparta {
-            background-color: royalblue;
+            background-color: #666;
+            border-color: transparent;
+            color: #fff !important;
+            cursor: pointer;
+        }
+
+        .button.is-sparta:hover {
+            background-color: cornflowerblue;
             border-color: transparent;
             color: #fff !important;
         }
 
         .button.is-sparta.is-outlined {
             background-color: transparent;
-            border-color: royalblue;
-            color: royalblue !important;
+            border-color: #ffffff;
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+
+        .button.is-sparta.is-outlined:hover{
+            box-shadow: 0 0 3px #fff;
         }
 
         .help {
@@ -30,6 +42,10 @@
 
         .is-hidden {
             display: none !important;
+        }
+
+        #wrap{
+            background-color: #222;
         }
 
         main {
@@ -44,9 +60,10 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 25vh;
-            height: 60%;
+            height: 66%;
             width: 1000px;
             border-radius: 5px;
+            margin-top:-50px;
         }
 
         .login-home > h1 {
@@ -55,6 +72,7 @@
             text-align: center;
             font-size: 40px;
             padding: 35px;
+            color:#ffffff;
         }
 
         .id-password {
@@ -70,12 +88,17 @@
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
-            height: 8vh;
+            height: 10vh;
+        }
+
+        .control > p{
+            padding:10px 0;
         }
 
         .help {
             font-size: 12px;
             padding: 10px;
+            color: #d4d4d4;
         }
 
         .has-text-centered {
@@ -94,11 +117,13 @@
         }
 
         hr {
-            background-color: royalblue;
             height: 3px;
             width: 100%;
         }
 
+        h4{
+            color: #d4d4d4;
+        }
         .login-button {
             width: 100%;
             padding: 10px;
@@ -114,7 +139,19 @@
 
         input {
             width: 100%;
-            height: 40px;
+            height: 45px;
+            background-color: transparent;
+            border: 1px solid #fff;
+            padding: 10px;
+            color: #fff;
+        }
+        input::placeholder{
+            color:#d4d4d4;
+        }
+
+        input:focus{
+            border:none;
+            outline: 3px solid cornflowerblue;
         }
 
     </style>
@@ -188,7 +225,7 @@
 
     <main>
         <section id='login-home' class="login-home">
-            <h1>로그인</h1>
+            <h1>로   그   인</h1>
             <div class="id-password">
                 <div class="field has-addons">
                     <div class="control has-icons-left">

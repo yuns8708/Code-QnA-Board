@@ -6,61 +6,19 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&family=Sunflower:wght@500&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/css/titleStyle.css">
 
     <style>
-        .button.is-sparta {
-            background-color: royalblue;
-            border-color: transparent;
-            color: #fff !important;
-        }
-
-        .button.is-sparta.is-outlined {
-            background-color: transparent;
-            border-color: royalblue;
-            color: royalblue !important;
-        }
-
-        .help {
-            color: gray;
-        }
 
         .is-hidden {
             display: none !important;
         }
 
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
         }
-
-        .login-home {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            height: 48%;
-            width: 60%;
-            border-radius: 5px;
-        }
-
-        .login-home > h1 {
-            width: 100%;
-            height: auto;
-            text-align: center;
-            font-size: 40px;
-            background-color: red;
-        }
-
-        .id-password {
-            width: 100%;
-            height: 40%;
-        }
-
 
     </style>
 
@@ -74,62 +32,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <script>
-        // {% if msg %}
-            //     alert("{{ msg }}")
-            // {% endif %}
 
-
-        function toggle_sign_up() {
-            $("#login-btn").toggleClass("is-hidden")
-            $("#logout-btn").toggleClass("is-hidden")
-        }
-
-        function ask_ques(){
-            if(user_info == ["id"]){
-                alert('')
+        function question() {
+            let cookie = document.cookie;
+            if (cookie == 0) {
+                alert("로그인하세요")
+            } else {
+                window.location.href = '/write'
             }
         }
 
-        function log_in() {
-            alert('로그인페이지로 가는중!')
-            window.location.href = "/login"
-        }
+        $(document).ready(function login() {
+            $('#login_out').empty()
+            let cookie = document.cookie;
+            if (cookie == 0) {
+                let temp_html = `<button class='login-out' onclick="location.href='/login'">로그인</button>`
+                $('#btn').append(temp_html)
+            } else {
+                let temp_html = `<button class='login-out' onclick="logout()">로그아웃</button>`
+                $('#btn').append(temp_html)
+            }
+        });
 
-        function log_out() {
-            $.removeCookie('mytoken', {path: '/'});
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'})
             alert('로그아웃!')
             window.location.href = "/login"
         }
-
-
     </script>
 </head>
 <body>
 <nav id="aside-nav">
-    <div class="title">
-        <h1>코딩 질문방</h1>
-        <h2>Code QnA Board</h2>
+    <div>
+        <h1>code_how( )</h1>
+        <h2>- Code QnA Board -</h2>
     </div>
     <ul class="category">
         <li>
-            <button type="button" id="html-css">HTML / CSS</button>
+            <button type="button" id="html-css" onclick="location.href='/html_CSS'">HTML / CSS</button>
         </li>
         <li>
-            <button type="button" id="js">Java Script</button>
+            <button type="button" id="js" onclick="location.href='/Javascript'">Java Script</button>
         </li>
         <li>
-            <button type="button" id="py">Python</button>
-        </li>
-        <li>
-            <button type="button" id="write-btn" onclick="ask_ques()">질문하기</button>
+            <button type="button" id="py" onclick="location.href='/Python'">Python</button>
         </li>
     </ul>
+    <button type="button" id="write-btn" onclick="question()">질문하기</button>
     <div class="bot-btn">
-        <button type="button" id="login-btn" onclick="toggle_sign_up();">로그인</button>
-        <button type="button" id="logout-btn" class="is-hidden" onclick=" toggle_sign_up(); log_out()">로그아웃</button>
+        <div id="btn"></div>
         <div class="bot-btn page-btn">
-            <button type="button" id="home-btn"><i class="fa-sharp fa-solid fa-house"></i></button>
-            <button type="button" id="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            <button type="button" id="home-btn" onclick="location.href='/';"><i
+                    class="fa-sharp fa-solid fa-house"></i></button>
+            <button type="button" id="back-btn" onclick="window.history.back()"><i
+                    class="fa-solid fa-arrow-left"></i></button>
         </div>
     </div>
 </nav>

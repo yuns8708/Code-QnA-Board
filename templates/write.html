@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>코드 질문 게시판</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="/static/css/titleStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        body {
+            background-color: #222;
+        }
+
+        main{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .write-all{
+            width:70%;
+            height: 75%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-top:-30px;
+        }
+
+        .write-title {
+            background-color: transparent;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+        .write-title > input {
+            background-color: transparent;
+            border-radius: 3px;
+            width: 75%;
+            height: 35px;
+            border: none;
+            box-shadow: 0px 0px 4px rgba(500, 500, 500, 0.9);
+            padding-left: 12px;
+            color: #d4d4d4;
+            font-size: 18px;
+            font-weight: bold;
+            left: 4px;
+        }
+
+        .write-title > input::placeholder {
+            color: #d4d4d4;
+            font-size: 18px;
+            font-weight: bold;
+
+        }
+
+        .write-title > select {
+            box-shadow: 0px 0px 4px rgba(500, 500, 500, 0.9);
+            height: 37px;
+            width: 22%;
+            background-color: transparent;
+            color: #d4d4d4;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            padding-left: 10px;
+        }
+
+        .write-content {
+            width:100%;
+            height: 500px;
+        }
+
+        .write-content > textarea {
+            box-shadow: 0px 0px 4px rgba(500, 500, 500, 0.9);
+            height: 100%;
+            background-color: transparent;
+            width: 100%;
+            padding: 30px;
+            color: #d4d4d4;
+            font-size: 18px;
+            font-weight: bold;
+            word-break: break-word;
+            border-radius: 3px;
+
+
+        }
+
+        .write-content > textarea::placeholder {
+            color: #d4d4d4;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .button {
+            height: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .button > button {
+            background-color: transparent;
+            height: 45px;
+            width: 110px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 4px rgba(500, 500, 500, 0.9);
+            color: #d4d4d4;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .button > button:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+    <script
+            src="https://kit.fontawesome.com/a991ae6b9e.js"
+            crossorigin="anonymous"
+    >
+    </script>
+    <script>
+        function writing() {
+
+            let title = $('#title').val()
+            let content = $('#content').val()
+            let category = $('#ex-select').val()
+            let fileUpload = $('#fileUpload').val()
+            let today = new Date().toISOString()
+
+            if (title == "") {
+                alert("제목을 입력하세요!");
+                return false
+            }
+            if (content == "") {
+                alert("내용을 입력하세요!");
+                return false
+            }
+
+            {
+                #글쓰기
+                내용
+                인풋
+                후
+                서버에
+                POST
+                요청, 요청완료
+                후
+                메인페이지로
+                이동
+            #
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/api/write',
+                data: {
+                    'title_give': title,
+                    'content_give': content,
+                    'category_give': category,
+                    'fileUpload_give': fileUpload,
+                    'date_give': today
+                },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.href = '/';
+                }
+            })
+        }
+
+        {
+            #질문하기
+            로그인
+            유무
+            확인
+            펑션
+        #
+        }
+
+        function question() {
+            let cookie = document.cookie;
+            if (cookie == 0) {
+                alert("로그인하세요")
+            } else {
+                window.location.href = '/write'
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <header>{% include 'header.html' %}</header>
+    <main>
+        <div class="write-all">
+            <div class="write-title">
+                <select id="ex-select">
+                    <option style="background-color:#222; ">html/CSS</option>
+                    <option style="background-color:#222; ">Javascript</option>
+                    <option style="background-color:#222; ">Python</option>
+                </select>
+                <input onfocus="this.placeholder = ''" placeholder="제목을 입력하세요" id="title">
+            </div>
+
+
+            <div class="write-content"><textarea style="border:none" onfocus="this.placeholder = ''"
+                                                 placeholder="내용을 입력하세요" id="content"></textarea></div>
+
+            <div class="button">
+                <button onclick="writing()">작성완료</button>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
