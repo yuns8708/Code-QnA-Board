@@ -24,7 +24,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        QnA_list = list(db.miniproject.find({}))
+        QnA_list = list(db.boards.find({}))
 
         #############
         boards = list(db.boards.find())
@@ -47,19 +47,6 @@ def home():
         def to_write():
             boards = list(db.boards.find({}, {'_id': False}))
             return jsonify({'boards': boards})
-
-# @app.route('/<id>')
-# def home_to_detail(id):
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         QnA_list = list(db.miniproject.find({}))
-#
-#         #############
-#         boards = list(db.boards.find())
-#         # boards에서 _id를 하나씩 꺼내서, 문자열화 시킴(원래는 object형)
-#         for board in boards:
-#             board["_id"] = str(board["_id"])
 
         return render_template('index.html',QnA_list=QnA_list,boards=boards)
     except jwt.ExpiredSignatureError:
@@ -132,7 +119,7 @@ def check_dup_nick():
     exists = bool(db.users.find_one({"usernick": usernick_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-############################################
+# 글쓰기 페이지 ###########################################
 # 글쓰기 페이지
 @app.route('/write')
 def write():
@@ -143,7 +130,7 @@ def write():
 # html/CSS 페이지
 @app.route('/html_CSS')
 def html_CSS():
-    QnA_list = list(db.miniproject.find({}, {'_id': False}))
+    QnA_list = list(db.boards.find({}, {'_id': False}))
     boards = list(db.boards.find())
     for board in boards:
         board["_id"] = str(board["_id"])
@@ -152,7 +139,7 @@ def html_CSS():
 # Javascript 페이지
 @app.route('/Javascript')
 def Javascript():
-    QnA_list = list(db.miniproject.find({}, {'_id': False}))
+    QnA_list = list(db.boards.find({}, {'_id': False}))
     boards = list(db.boards.find())
     for board in boards:
         board["_id"] = str(board["_id"])
@@ -161,7 +148,7 @@ def Javascript():
 # Python 페이지
 @app.route('/Python')
 def Python():
-    QnA_list = list(db.miniproject.find({}, {'_id': False}))
+    QnA_list = list(db.boards.find({}, {'_id': False}))
     boards = list(db.boards.find())
     for board in boards:
         board["_id"] = str(board["_id"])
@@ -178,7 +165,7 @@ def write_post():
     category_receive = request.form['category_give']
     fileUpload_receive = request.form['fileUpload_give']
 
-    QnA_list = list(db.miniproject.find({}, {'_id': False}))
+    QnA_list = list(db.boards.find({}, {'_id': False}))
     count = len(QnA_list) + 1
 
     # done : 게시글 삭제유무 판단에 사용,    num : 게시글 고유 번호 확인용
@@ -187,7 +174,7 @@ def write_post():
 
     return jsonify({'msg': '작성 완료'})
 
-############################################
+# 상세페이지 ###########################################
 # 상세페이지
 @app.route('/detail')
 def detail():
