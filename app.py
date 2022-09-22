@@ -32,6 +32,9 @@ def home():
         for board in boards:
             board["_id"] = str(board["_id"])
 
+        # board 역순 정렬
+        boards.reverse()
+
         user_info = db.users.find_one({"username": payload["id"]})
         # user_info = db.users.find_one({'username':ObjectId(id)})
         print(payload)
@@ -134,6 +137,7 @@ def html_CSS():
     boards = list(db.boards.find())
     for board in boards:
         board["_id"] = str(board["_id"])
+    boards.reverse()
     return render_template('html_CSS.html', QnA_list=QnA_list,boards=boards)
 
 # Javascript 페이지
@@ -143,6 +147,7 @@ def Javascript():
     boards = list(db.boards.find())
     for board in boards:
         board["_id"] = str(board["_id"])
+    boards.reverse()
     return render_template('Javascript.html', QnA_list=QnA_list,boards=boards)
 
 # Python 페이지
@@ -152,6 +157,7 @@ def Python():
     boards = list(db.boards.find())
     for board in boards:
         board["_id"] = str(board["_id"])
+    boards.reverse()
     return render_template('Python.html', QnA_list=QnA_list,boards=boards)
 
 
