@@ -9,19 +9,195 @@
     <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&family=Sunflower:wght@500&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/css/titleStyle.css">
-
     <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    color: #222;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+li, ul, a{
+    list-style: none;
+    text-decoration: none;
+}
+#wrap{
+    width:100%;
+    height: 100vh;
+    display: flex;
+}
+#aside-nav{
+    padding: 50px;
+    width: 25%;
+    height: 100vh;
+    background-color: dimgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    /* 배경 이미지 첨부*/
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_960_720.jpg");
+    background-size: cover;
+    background-position: -80px;
+
+    /* 고정 설정*/
+    position: fixed;
+    z-index: 1;
+}
+#aside-nav > div > h1{
+    padding: 30px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    color:#fff;
+}
+#aside-nav > div > h2{
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    color:#d4d4d4;
+}
+.category{
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.category > li > button{
+    background-color: #fff;
+    width: 200px;
+    height: 50px;
+    font-size:19px;
+    border:none;
+    border-radius: 5px;
+    font-weight: 500;
+
+    /*버튼설정*/
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+.category > li > button:hover {
+    background-color: white;
+    color: black;
+    /*마우스 올릴 시 손가락모양 나오게하기*/
+    cursor: pointer;
+}
+/*질문하기 버튼 추가*/
+#aside-nav > button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+#aside-nav>button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+#write-btn{
+    background-color: #fff;
+    width: 200px;
+    height: 50px;
+    font-size:19px;
+    border:none;
+    border-radius: 5px;
+}
+
+/*로그인 버튼*/
+.bot-btn{
+    width:100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    height: 50px;
+}
+
+#btn {
+    border: none;
+    width: 50%;
+
+}
+.login-out{
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    color:#fff;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    font-size: 15px;
+}
+
+.login-out:hover{
+    box-shadow: 0 0 5px #fff;
+}
+
+.page-btn{
+    width:35%;
+    height: 50px;
+    border-radius: 0;
+
+}
+.page-btn > button{
+    margin-left: 10px;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    color:#fff;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    font-size: 15px;
+}
+
+button > i {
+    color: #fff;
+}
+.page-btn > button:hover{
+    box-shadow: 0 0 5px #fff;
+}
+
+main{
+    /*위치 설정 (fixed와 세트)*/
+    position: absolute;
+    left: 25%;
+
+    width: 70%;
+    height:90vh;
+    margin: 50px;
+    padding: 50px;
+    /*background-color: dimgray;*/
+    border-radius: 10px;
+}
+
+
+
+
         .button.is-sparta {
-            background-color: royalblue;
+            background-color: #666;
+            border-color: transparent;
+            color: #fff !important;
+            cursor: pointer;
+        }
+
+        .button.is-sparta:hover {
+            background-color: cornflowerblue;
             border-color: transparent;
             color: #fff !important;
         }
 
         .button.is-sparta.is-outlined {
             background-color: transparent;
-            border-color: royalblue;
-            color: royalblue !important;
+            border-color: #ffffff;
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+
+        .button.is-sparta.is-outlined:hover{
+            box-shadow: 0 0 3px #fff;
         }
 
         .help {
@@ -31,27 +207,116 @@
         .is-hidden {
             display: none !important;
         }
-        main{
+
+        #wrap{
+            background-color: #222;
+        }
+
+        main {
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .login-home {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            height: 48%;
-            width: 60%;
+            padding: 0 25vh;
+            height: 66%;
+            width: 1000px;
             border-radius: 5px;
+            margin-top:-50px;
         }
-        .login-home > h1{
+
+        .login-home > h1 {
             width: 100%;
             height: auto;
             text-align: center;
-            font-size: 50px;
+            font-size: 40px;
+            padding: 35px;
+            color:#ffffff;
         }
 
+        .id-password {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 42%;
+        }
+
+        .control {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            height: 10vh;
+        }
+
+        .control > p{
+            padding:10px 0;
+        }
+
+        .help {
+            font-size: 12px;
+            padding: 10px;
+            color: #d4d4d4;
+        }
+
+        .has-text-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 25vh;
+        }
+
+        .has-text-centered > .is-mobile {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        hr {
+            height: 3px;
+            width: 100%;
+        }
+
+        h4{
+            color: #d4d4d4;
+        }
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+        }
+
+        .is-outlined {
+            width: 45%;
+            padding: 8px;
+            font-size: 15px;
+        }
+
+
+        input {
+            width: 100%;
+            height: 45px;
+            background-color: transparent;
+            border: 1px solid #fff;
+            padding: 10px;
+            color: #fff;
+        }
+        input::placeholder{
+            color:#d4d4d4;
+        }
+
+        input:focus{
+            border:none;
+            outline: 3px solid cornflowerblue;
+        }
 
     </style>
 
@@ -64,13 +329,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <!-- flask 쿠키삭제 스크립트 -->
-
     <script>
         // {% if msg %}
-        //     alert("{{ msg }}")
-        // {% endif %}
+            //     alert("{{ msg }}")
+            // {% endif %}
+
         function sign_in() {
             let username = $("#input-username").val()
             let password = $("#input-password").val()
@@ -108,64 +371,25 @@
             });
         }
 
-        function sign_out() {
+
+        function log_out() {
             $.removeCookie('mytoken', {path: '/'});
-            window.location.href = '/';
+            alert('로그아웃!')
+            window.location.href = "/login"
         }
-
-        function toggle_sign_up() {
-            $("#login-btn").toggleClass("is-hidden")
-            $("#logout-btn").toggleClass("is-hidden")
-            $("#div-sign-in-or-up").toggleClass("is-hidden")
-            $("#help-id").toggleClass("is-hidden")
-            $("#help-password").toggleClass("is-hidden")
-        }
-
 
     </script>
+
 
 </head>
 <body>
 <div id="wrap">
-    <nav id="aside-nav">
-        <div class="title">
-            <h1>코딩 질문방</h1>
-            <h2>Code QnA Board</h2>
-        </div>
-        <ul class="category">
 
- <!--            2022-09-21 김휘린 변경사항 : 각 버튼에 카테고리 하이퍼링크 추가-->
-            <li>
-                <button type="button" id="html-css" onclick="location.href='/html_CSS'">HTML / CSS</button>
-            </li>
-            <li>
-                <button type="button" id="js" onclick="location.href='/Javascript'">Java Script</button>
-            </li>
-            <li>
-                <button type="button" id="py" onclick="location.href='/Python'">Python</button>
-            </li>
-        </ul>
-        <button type="button" id="write-btn" onclick="location.href='/write';">질문하기</button>
-            </li>
-        </ul>
-        <div class="bot-btn">
-            <button type="button" id="login-btn" onclick="window.location.href='/login'; toggle_sign_up()">로그인</button>
-            <button type="button" id="logout-btn" class="is-hidden" onclick=" toggle_sign_up()">로그아웃</button>
-            <div class="bot-btn page-btn">
-
-<!--                2022-09-21 김휘린 변경사항 : 홈, 뒤로가기 하이퍼링크 추가-->
-                <button type="button" id="home-btn" onclick="location.href='/';"><i
-                        class="fa-sharp fa-solid fa-house"></i></button>
-                <button type="button" id="back-btn" onclick="window.history.back()"><i
-                        class="fa-solid fa-arrow-left"></i></button>
-            </div>
-        </div>
-    </nav>
-
+    <header>{% include 'header.html' %}</header>
 
     <main>
         <section id='login-home' class="login-home">
-            <h1>로그인</h1>
+            <h1>로   그   인</h1>
             <div class="id-password">
                 <div class="field has-addons">
                     <div class="control has-icons-left">
@@ -185,7 +409,7 @@
             </div>
             <div id="div-sign-in-or-up" class="has-text-centered">
                 <nav class="level is-mobile">
-                    <button class="level-item button is-sparta" onclick="sign_in()">
+                    <button class="login-button level-item button is-sparta" onclick="sign_in()">
                         로그인
                     </button>
                 </nav>
@@ -197,14 +421,12 @@
                         회원가입하기
                     </button>
                     <button class="level-item button is-sparta is-outlined"
-                            onclick="window.location.href='/'; toggle_sign_up()">
+                            onclick="window.location.href='/none'">
                         비회원으로 입장
                     </button>
                 </nav>
             </div>
         </section>
-
-
     </main>
 </div>
 </body>
