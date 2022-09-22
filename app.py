@@ -159,20 +159,32 @@ def Python():
 # 글쓰기 페이지 인풋값
 @app.route("/api/write", methods=["POST"])
 def write_post():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 포스팅하기
+        user_info = db.users.find_one({"username": payload["id"]})
+        title_receive = request.form['title_give']
+        content_receive = request.form['content_give']
+        category_receive = request.form['category_give']
+        fileUpload_receive = request.form['fileUpload_give']
+        date_receive = request.form["date_give"]
 
-    title_receive = request.form['title_give']
-    content_receive = request.form['content_give']
-    category_receive = request.form['category_give']
-    fileUpload_receive = request.form['fileUpload_give']
+        # QnA_list = list(db.boards.find({}, {'_id': False}))
+        # count = len(QnA_list) + 1
 
-    QnA_list = list(db.boards.find({}, {'_id': False}))
-    count = len(QnA_list) + 1
-
-    # done : 게시글 삭제유무 판단에 사용,    num : 게시글 고유 번호 확인용
-    doc = {'done':0,'num':count, 'title': title_receive, 'content': content_receive, 'category':category_receive, 'fileUpload':fileUpload_receive}
-    db.boards.insert_one(doc)
-
-    return jsonify({'msg': '작성 완료'})
+        doc = {
+            "title": title_receive,
+            "content": content_receive,
+            "category": category_receive,
+            "fileUpload": fileUpload_receive,
+            "usernick": user_info["usernick"],
+            "username": user_info["username"]
+        }
+        db.boards.insert_one(doc)
+        return jsonify({"result": "success", 'msg': '작성 완료'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return jsonify({'result': 'fail', 'msg': '로그인 후 이용해주세요.'})
 
 # 상세페이지 ###########################################
 # 상세페이지
@@ -265,14 +277,14 @@ def board_delete():
 
         # 게시판 db지우기
         db.boards.delete_one({'_id': ObjectId(board_id_receive), 'username':username})
-        board_username = db.boards.find_one({'_id': f'ObjectId({board_id_receive})'})['username']
+        # board_username = db.boards.find_one({'_id': f'ObjectId({board_id_receive})'})['username']
 
         # 답변목록db도 지우기
         comments = list(db.comments.find())
         for c in comments:
             db.comments.delete_one({'board_id': board_id_receive, 'username':username})
 
-        return jsonify({"result": "success", "username":username, "board_username":board_username})
+        return jsonify({"result": "success", "username":username})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return jsonify({'result': 'fail', 'msg': '삭제 권한이 없습니다.'})
 
